@@ -76,9 +76,9 @@ TRANSFORMER_POS_DISCOUNT	80
 
 PRE_TOKENIZER	TransfoXLTokenizer
 PRE_TOKENIZER_PATH  ../ExampleInitModel/transfo-xl-wt103
-PYLEARN_MODEL <relative_path_to_pretrained_model_folder>
+# PYLEARN_MODEL <relative_path_to_pretrained_model_folder>
 # e.g. PYLEARN_MODEL conf_hmnet_AMI_conf~/run_1/11600
-# PYLEARN_MODEL ../ExampleInitModel/AMI-finetuned
+PYLEARN_MODEL ../ExampleInitModel/HMNet-pretrained
 
 ##################
 # Tokenizer settings
