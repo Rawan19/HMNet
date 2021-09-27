@@ -210,7 +210,7 @@ class HMNetTrainer(DistributedTrainer):
             self.task.evaluator.reset_best_score(set_high=True)
             result, score, got_better_score = self.task.evaluator.eval_batches(
                 self.module, batch_generator_eval, self.saveFolder, eval_dataset)
-            print('result:")
+            print('result:')
             print(result)
             if self.opt['rank'] == 0:
                 self.log("{0} results breakdown\n{1}".format(
