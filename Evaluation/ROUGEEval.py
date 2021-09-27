@@ -200,6 +200,7 @@ class ROUGEEval():
         if self.opt['rank'] == 0:
             # flatten lists
             predictions = [item for sublist in predictions for item in sublist]
+            print(predictions)
             y_tokens = [item for sublist in y_tokens for item in sublist]
             x_tokens = [item for sublist in x_tokens for item in sublist]
             # x_ids = [item for sublist in x_ids for item in sublist]
