@@ -272,9 +272,11 @@ class ROUGEEval():
         if os.path.exists(gt_dir):
             shutil.rmtree(gt_dir)
         os.makedirs(gt_dir)
-
-        special_char_dict = self.print_to_rouge_dir_gt(groundtruths, gt_dir="Summaries_tgt/", 'gt', 'SPLIT_CHARS_FOR_EVAL' in self.opt)
-        self.print_to_rouge_dir(predictions, pred_dir="Summaries_pred/", 'pred', 'SPLIT_CHARS_FOR_EVAL' in self.opt, special_char_dict)
+        
+        gt_dir="Summaries_tgt/"
+        pred_dir="Summaries_pred/"
+        special_char_dict = self.print_to_rouge_dir_gt(groundtruths, gt_dir, 'gt', 'SPLIT_CHARS_FOR_EVAL' in self.opt)
+        self.print_to_rouge_dir(predictions, pred_dir, 'pred', 'SPLIT_CHARS_FOR_EVAL' in self.opt, special_char_dict)
 
         r = pyrouge.Rouge155(self.pyrouge_dir)
         r.system_dir = pred_dir
