@@ -499,7 +499,8 @@ class TransformerBeam():
         self.encoder = encoder
         self.decoder = decoder
         self.opt = opt
-        self.max_sent_len = int(opt['max_sent_len'])
+#         self.max_sent_len = int(opt['max_sent_len'])
+        self.max_sent_len = 10
         self.begin_id = begin_id
         self.vocab = vocab
         self.beam_width = int(opt['beam_width'])
