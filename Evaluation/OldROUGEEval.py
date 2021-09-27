@@ -435,7 +435,10 @@ class OldROUGEEval():
     
     def eval(self, predictions, groundtruths):
         predictions = [self.make_html_safe(w) for w in predictions]
+        print(predictions)
+        
         groundtruths = [self.make_html_safe(w) for w in groundtruths]
+        print(groundtruths)
         results = rouge(predictions, groundtruths)
         return results
 
