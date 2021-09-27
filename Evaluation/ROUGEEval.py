@@ -141,7 +141,8 @@ class ROUGEEval():
             return tokenizer.decode(tokenizer.convert_tokens_to_ids(tokens), skip_special_tokens=True)
 
     def eval_batches(self, module, dev_batches, save_folder, label=''):
-        max_sent_len = int(self.opt['MAX_GEN_LENGTH'])
+#         max_sent_len = int(self.opt['MAX_GEN_LENGTH'])
+        max_sent_len = 10
 
         logger.info('Decoding current model ... \nSaving folder is {}'.format(save_folder))
 
