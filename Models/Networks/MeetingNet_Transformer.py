@@ -97,7 +97,7 @@ class MeetingNet_Transformer(nn.Module):
     def forward(self, batch, beam_search=False, max_sent_len=None):
         if beam_search:
             # return self.beam_search(batch, max_sent_len)
-            max_sent_len = 10
+           
             return self.generate(batch, max_sent_len)
 
         outputs = self._forward(**batch)
