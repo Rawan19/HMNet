@@ -183,8 +183,8 @@ class ROUGEEval():
                 print(gts)
                 x_tokens.extend(dev_batch["encoder_tokens"])
                 y_tokens.extend(dev_batch["decoder_tokens"])
-                print('y_tokens')
-                print(y_tokens)
+             #   print('y_tokens')
+              #  print(y_tokens)
 
                 if ("DEBUG" in self.opt and j >=10) or j >= self.eval_batches_num:
                     # in debug mode (decode first 10 batches) ortherwise decode first self.eval_batches_num bathes
@@ -206,7 +206,7 @@ class ROUGEEval():
         if self.opt['rank'] == 0:
             # flatten lists
             predictions = [item for sublist in predictions for item in sublist]
-            print(predictions)
+            #print(predictions)
             y_tokens = [item for sublist in y_tokens for item in sublist]
             x_tokens = [item for sublist in x_tokens for item in sublist]
             # x_ids = [item for sublist in x_ids for item in sublist]
@@ -220,6 +220,8 @@ class ROUGEEval():
             if not os.path.isdir(os.path.join(save_folder, "intermediate_results")):
                 os.makedirs(os.path.join(save_folder, "intermediate_results"))
             top_1_predictions = [pred[0] for pred in predictions]
+            print("top_1_predictions")
+            print(top_1_predictions)
             with open(os.path.join(
                 save_folder, "intermediate_results",
                 'res_' + label + '.json'), 'w', encoding='utf-8') as output_file:
