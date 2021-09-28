@@ -182,7 +182,7 @@ class ROUGEEval():
                 x_tokens.extend(dev_batch["encoder_tokens"])
                 y_tokens.extend(dev_batch["decoder_tokens"])
                 print('y_tokens')
-                print('y_tokens')
+                print(y_tokens)
 
                 if ("DEBUG" in self.opt and j >=10) or j >= self.eval_batches_num:
                     # in debug mode (decode first 10 batches) ortherwise decode first self.eval_batches_num bathes
