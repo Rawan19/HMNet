@@ -175,10 +175,14 @@ class ROUGEEval():
                 beam_search_res = module(dev_batch, beam_search=True, max_sent_len=10)
                 pred = [[t[0] for t in x] if len(x) > 0 else [[]] for x in beam_search_res]
                 predictions.extend([[self._convert_tokens_to_string(decoder_tokenizer, tt) for tt in t] for t in pred])
+                print('predictions')
+                print(predictions)
 
                 gts.extend([self._convert_tokens_to_string(decoder_tokenizer, t) for t in dev_batch["decoder_tokens"]])
                 x_tokens.extend(dev_batch["encoder_tokens"])
                 y_tokens.extend(dev_batch["decoder_tokens"])
+                print('y_tokens')
+                print('y_tokens')
 
                 if ("DEBUG" in self.opt and j >=10) or j >= self.eval_batches_num:
                     # in debug mode (decode first 10 batches) ortherwise decode first self.eval_batches_num bathes
