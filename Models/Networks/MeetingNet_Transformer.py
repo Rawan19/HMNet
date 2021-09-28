@@ -71,6 +71,8 @@ class MeetingNet_Transformer(nn.Module):
         self.decoder = Decoder(opt, vocab_dim, self.vocab_size, embedder, self.encoder.token_transformer_dim, self.encoder.sent_transformer_dim)
 
         if 'PYLEARN_MODEL' in self.opt:
+            print('pretrained heree')
+            print(os.path.join(opt['datadir'], opt['PYLEARN_MODEL']))
             self.from_pretrained(os.path.join(opt['datadir'], opt['PYLEARN_MODEL']))
 
     def save_pretrained(self, save_dir):
