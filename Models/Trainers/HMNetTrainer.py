@@ -66,6 +66,9 @@ class HMNetTrainer(DistributedTrainer):
                                               world_size=self.opt['world_size'],
                                               rank=self.opt['rank'],
                                               seed=self.seed)
+        
+        print('batch_generator')
+        print(batch_generator)
         if isinstance(batch_generator, BaseBatchGen):
             # If it is a wrapper class of an infinibatch iterator,
             # get the internal infnitibatch iterator.
