@@ -141,8 +141,8 @@ class ROUGEEval():
             return tokenizer.decode(tokenizer.convert_tokens_to_ids(tokens), skip_special_tokens=True)
 
     def eval_batches(self, module, dev_batches, save_folder, label=''):
-#         max_sent_len = int(self.opt['MAX_GEN_LENGTH'])
-        max_sent_len = 10
+        max_sent_len = int(self.opt['MAX_GEN_LENGTH'])
+       # max_sent_len = 10
 
         logger.info('Decoding current model ... \nSaving folder is {}'.format(save_folder))
 
@@ -172,7 +172,7 @@ class ROUGEEval():
                     if torch.is_tensor(dev_batch[b]):
                         dev_batch[b] = dev_batch[b].to(self.opt['device'])
 
-                beam_search_res = module(dev_batch, beam_search=True, max_sent_len=10)
+                beam_search_res = module(dev_batch, beam_search=True, max_sent_len)
                 pred = [[t[0] for t in x] if len(x) > 0 else [[]] for x in beam_search_res]
                 predictions.extend([[self._convert_tokens_to_string(decoder_tokenizer, tt) for tt in t] for t in pred])
                 print('predictions')
