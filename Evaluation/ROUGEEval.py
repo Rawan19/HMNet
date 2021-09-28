@@ -172,7 +172,7 @@ class ROUGEEval():
                     if torch.is_tensor(dev_batch[b]):
                         dev_batch[b] = dev_batch[b].to(self.opt['device'])
 
-                beam_search_res = module(dev_batch, beam_search=True, max_sent_len)
+                beam_search_res = module(dev_batch, beam_search=True, max_sent_len=max_sent_len)
                 pred = [[t[0] for t in x] if len(x) > 0 else [[]] for x in beam_search_res]
                 predictions.extend([[self._convert_tokens_to_string(decoder_tokenizer, tt) for tt in t] for t in pred])
                 print('predictions')
