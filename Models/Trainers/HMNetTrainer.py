@@ -76,9 +76,13 @@ class HMNetTrainer(DistributedTrainer):
     def set_up_model(self):
         # instantiate module (tokenizer should be contained in module as self.module.tokenizer)
         try:
+            print("self.opt['MODEL']")
+            print(self.opt['MODEL'])
             model_module = importlib.import_module(
                 'Models.Networks.' + self.opt['MODEL'])
             model_class = getattr(model_module, self.opt['MODEL'])
+            print('self.opt:')
+            print(self.opt)
             self.module = model_class(self.opt)
         except Exception as e:
             self.log(e)
