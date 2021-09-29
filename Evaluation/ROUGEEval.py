@@ -209,6 +209,9 @@ class ROUGEEval():
             #print(predictions)
             y_tokens = [item for sublist in y_tokens for item in sublist]
             x_tokens = [item for sublist in x_tokens for item in sublist]
+            
+            print('x_tokens:')
+            print(x_tokens)
             # x_ids = [item for sublist in x_ids for item in sublist]
             # y_ids = [item for sublist in y_ids for item in sublist]
             gts = [item for sublist in gts for item in sublist]
