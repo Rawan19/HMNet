@@ -182,6 +182,8 @@ class ROUGEEval():
                 print('gts')
                 print(gts)
                 x_tokens.extend(dev_batch["encoder_tokens"])
+                print('x_tokens')
+                print(x_tokens)
                 y_tokens.extend(dev_batch["decoder_tokens"])
              #   print('y_tokens')
               #  print(y_tokens)
