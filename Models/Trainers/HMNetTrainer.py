@@ -211,7 +211,7 @@ class HMNetTrainer(DistributedTrainer):
             self.log("Evaluating model ... ")
         self.set_up_model()
 
-        for eval_dataset in [ 'test']:
+        for one_example in [ 'test']:
        # for one_example in ['inference']:
             batch_generator_eval = self.get_batch_generator(one_example)
 #             batch_generator_eval = self.get_batch_generator(eval_dataset)
