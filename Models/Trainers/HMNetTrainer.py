@@ -217,10 +217,13 @@ class HMNetTrainer(DistributedTrainer):
 #             batch_generator_eval = self.get_batch_generator(eval_dataset)
 
             self.task.evaluator.reset_best_score(set_high=True)
-            result, score, got_better_score = self.task.evaluator.eval_batches(
+#             result, score, got_better_score = self.task.evaluator.eval_batches(
+#                 self.module, batch_generator_eval, self.saveFolder, one_example)
+            predictions = self.task.evaluator.eval_batches(
                 self.module, batch_generator_eval, self.saveFolder, one_example)
-            print('result:')
-            print(result)
+            
+        #    print('result:')
+         #   print(result)
             if self.opt['rank'] == 0:
                 self.log("{0} results breakdown\n{1}".format(
                     one_example, result))
