@@ -72,6 +72,7 @@ if command == "train":
 
 elif command == "evaluate":
     trainer.eval()
+    trainer.inference()
 
 else:
     assert False, f"Unknown command: {command}"
