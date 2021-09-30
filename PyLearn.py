@@ -71,7 +71,7 @@ if command == "train":
     trainer.train()
 
 elif command == "evaluate":
-    trainer.eval()
+    predictions = trainer.eval()
    # trainer.inference()
 
 else:
