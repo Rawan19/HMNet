@@ -178,99 +178,104 @@ class ROUGEEval():
                 print('predictions')
                 print(predictions)
 
-                gts.extend([self._convert_tokens_to_string(decoder_tokenizer, t) for t in dev_batch["decoder_tokens"]])
-                print('gts')
-                print(gts)
+                #gts.extend([self._convert_tokens_to_string(decoder_tokenizer, t) for t in dev_batch["decoder_tokens"]])
+                #print('gts')
+                #print(gts)
                 x_tokens.extend(dev_batch["encoder_tokens"])
                 print('x_tokens')
                 print(x_tokens)
                 y_tokens.extend(dev_batch["decoder_tokens"])
              #   print('y_tokens')
               #  print(y_tokens)
+                #stop here
+                break
+                return predictions
+                
 
-                if ("DEBUG" in self.opt and j >=10) or j >= self.eval_batches_num:
-                    # in debug mode (decode first 10 batches) ortherwise decode first self.eval_batches_num bathes
-                    break
+#                 if ("DEBUG" in self.opt and j >=10) or j >= self.eval_batches_num:
+#                     # in debug mode (decode first 10 batches) ortherwise decode first self.eval_batches_num bathes
+#                     break
 
-        # use MPI to gather results from all processes / GPUs
-        # the result of the gather operation is a list of sublists
-        # each sublist corresponds to the list created on one of the MPI processes (or GPUs, respectively)
-        # we flatten this list into a "simple" list
-        assert len(predictions) == len(gts), "len(predictions): {0}, len(gts): {1}".format(len(predictions), len(gts))
-        comm = MPI.COMM_WORLD
-        predictions = comm.gather(predictions, root=0)
-        x_tokens = comm.gather(x_tokens, root=0)
-        y_tokens = comm.gather(y_tokens, root=0)
-        # if GPU numbers are high (>=8), passing x_ids, y_ids to a rank 0 will cause out of memory
-        # x_ids = comm.gather(x_ids, root=0)
-        # y_ids = comm.gather(y_ids, root=0)
-        gts = comm.gather(gts, root=0)
-        if self.opt['rank'] == 0:
-            # flatten lists
-            predictions = [item for sublist in predictions for item in sublist]
-            #print(predictions)
-            y_tokens = [item for sublist in y_tokens for item in sublist]
-            x_tokens = [item for sublist in x_tokens for item in sublist]
+#         # use MPI to gather results from all processes / GPUs
+#         # the result of the gather operation is a list of sublists
+#         # each sublist corresponds to the list created on one of the MPI processes (or GPUs, respectively)
+#         # we flatten this list into a "simple" list
+#         assert len(predictions) == len(gts), "len(predictions): {0}, len(gts): {1}".format(len(predictions), len(gts))
+#         comm = MPI.COMM_WORLD
+#         predictions = comm.gather(predictions, root=0)
+#         x_tokens = comm.gather(x_tokens, root=0)
+#         y_tokens = comm.gather(y_tokens, root=0)
+#         # if GPU numbers are high (>=8), passing x_ids, y_ids to a rank 0 will cause out of memory
+#         # x_ids = comm.gather(x_ids, root=0)
+#         # y_ids = comm.gather(y_ids, root=0)
+#         gts = comm.gather(gts, root=0)
+#         if self.opt['rank'] == 0:
+#             # flatten lists
+#             predictions = [item for sublist in predictions for item in sublist]
+#             #print(predictions)
+#             y_tokens = [item for sublist in y_tokens for item in sublist]
+#             x_tokens = [item for sublist in x_tokens for item in sublist]
             
-            print('x_tokens:')
-            print(x_tokens)
-            # x_ids = [item for sublist in x_ids for item in sublist]
-            # y_ids = [item for sublist in y_ids for item in sublist]
-            gts = [item for sublist in gts for item in sublist]
-            # import pdb; pdb.set_trace()
-            assert len(predictions) == len(y_tokens) == len(x_tokens) == len(gts), \
-                "len(predictions): {0}, len(y_tokens): {1}, len(x_tokens): {2}, len(gts): {3}".format(len(predictions), len(y_tokens),      len(x_tokens), len(gts))
+#             print('x_tokens:')
+#             print(x_tokens)
+#             # x_ids = [item for sublist in x_ids for item in sublist]
+#             # y_ids = [item for sublist in y_ids for item in sublist]
+            
+#             gts = [item for sublist in gts for item in sublist]
+#             # import pdb; pdb.set_trace()
+#             assert len(predictions) == len(y_tokens) == len(x_tokens) == len(gts), \
+#                 "len(predictions): {0}, len(y_tokens): {1}, len(x_tokens): {2}, len(gts): {3}".format(len(predictions), len(y_tokens),      len(x_tokens), len(gts))
 
-            # write intermediate results only on rank 0
-            if not os.path.isdir(os.path.join(save_folder, "intermediate_results")):
-                os.makedirs(os.path.join(save_folder, "intermediate_results"))
-            top_1_predictions = [pred[0] for pred in predictions]
-            print("top_1_predictions")
-            print(top_1_predictions)
-            with open(os.path.join(
-                save_folder, "intermediate_results",
-                'res_' + label + '.json'), 'w', encoding='utf-8') as output_file:
-                write_json_res(output_file, [encoder_tokenizer, decoder_tokenizer], x_ids, y_ids, x_tokens, y_tokens, predictions, gts)
-            try:
-                result = self.eval(top_1_predictions, gts)
-            except Exception as e:
-                logger.exception("ROUGE Eval ERROR")
-                result = {}
-                score = -float("Inf")
-                pass # this happens when no overlapping between pred and gts
-            else:
-                rouge_su4 = rouge(top_1_predictions, gts) # f, prec, recall
-                result = {
-                    'ROUGE_1': result['rouge_1_f_score'] * 100.0,
-                    'ROUGE_1_Prc': result['rouge_1_precision'] * 100.0,
-                    'ROUGE_1_Rcl': result['rouge_1_recall'] * 100.0,
-                    'ROUGE_2': result['rouge_2_f_score'] * 100.0,
-                    'ROUGE_2_Prc': result['rouge_2_precision'] * 100.0,
-                    'ROUGE_2_Rcl': result['rouge_2_recall'] * 100.0,
-                    'ROUGE_L': result['rouge_l_f_score'] * 100.0,
-                    'ROUGE_L_Prc': result['rouge_l_precision'] * 100.0,
-                    'ROUGE_L_Rcl': result['rouge_l_recall'] * 100.0,
-                    'ROUGE_SU4': rouge_su4['rouge_su4_f_score'] * 100.0
-                }
+#             # write intermediate results only on rank 0
+#             if not os.path.isdir(os.path.join(save_folder, "intermediate_results")):
+#                 os.makedirs(os.path.join(save_folder, "intermediate_results"))
+#             top_1_predictions = [pred[0] for pred in predictions]
+#             print("top_1_predictions")
+#             print(top_1_predictions)
+#             with open(os.path.join(
+#                 save_folder, "intermediate_results",
+#                 'res_' + label + '.json'), 'w', encoding='utf-8') as output_file:
+#                 write_json_res(output_file, [encoder_tokenizer, decoder_tokenizer], x_ids, y_ids, x_tokens, y_tokens, predictions, gts)
+#             try:
+#                 result = self.eval(top_1_predictions, gts)
+#             except Exception as e:
+#                 logger.exception("ROUGE Eval ERROR")
+#                 result = {}
+#                 score = -float("Inf")
+#                 pass # this happens when no overlapping between pred and gts
+#             else:
+#                 rouge_su4 = rouge(top_1_predictions, gts) # f, prec, recall
+#                 result = {
+#                     'ROUGE_1': result['rouge_1_f_score'] * 100.0,
+#                     'ROUGE_1_Prc': result['rouge_1_precision'] * 100.0,
+#                     'ROUGE_1_Rcl': result['rouge_1_recall'] * 100.0,
+#                     'ROUGE_2': result['rouge_2_f_score'] * 100.0,
+#                     'ROUGE_2_Prc': result['rouge_2_precision'] * 100.0,
+#                     'ROUGE_2_Rcl': result['rouge_2_recall'] * 100.0,
+#                     'ROUGE_L': result['rouge_l_f_score'] * 100.0,
+#                     'ROUGE_L_Prc': result['rouge_l_precision'] * 100.0,
+#                     'ROUGE_L_Rcl': result['rouge_l_recall'] * 100.0,
+#                     'ROUGE_SU4': rouge_su4['rouge_su4_f_score'] * 100.0
+#                 }
 
-                score = result['ROUGE_1']
-                if score > self.best_score:
-                    copyfile(os.path.join(
-                            save_folder, "intermediate_results",
-                            'res_' + label + '.json'),
-                        os.path.join(
-                            save_folder, "intermediate_results",
-                            'res_' + label + '.best.json'))
-                    self.best_score = score
-                    self.best_res = result
-                    got_better_score = True
+#                 score = result['ROUGE_1']
+#                 if score > self.best_score:
+#                     copyfile(os.path.join(
+#                             save_folder, "intermediate_results",
+#                             'res_' + label + '.json'),
+#                         os.path.join(
+#                             save_folder, "intermediate_results",
+#                             'res_' + label + '.best.json'))
+#                     self.best_score = score
+#                     self.best_res = result
+#                     got_better_score = True
 
-        else:
-            result = {}
-            score = -float("Inf")
-            got_better_score = False
+#         else:
+#             result = {}
+#             score = -float("Inf")
+#             got_better_score = False
 
-        return result, score, got_better_score
+#         return result, score, got_better_score
 
     def eval(self, predictions, groundtruths):
         # predictions, groundtruths = self.filter_empty(predictions, groundtruths)
