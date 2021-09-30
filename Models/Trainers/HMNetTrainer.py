@@ -224,9 +224,11 @@ class HMNetTrainer(DistributedTrainer):
             
         #    print('result:')
          #   print(result)
-            if self.opt['rank'] == 0:
-                self.log("{0} results breakdown\n{1}".format(
-                    one_example, result))
+#             if self.opt['rank'] == 0:
+#                 self.log("{0} results breakdown\n{1}".format(
+#                     one_example, result))
+
+    return predictions
 
     def train(self):
         self.log(f"train on rank {self.opt['rank']}")
