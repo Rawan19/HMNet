@@ -204,6 +204,8 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
     ###############################
 
     def _parse_tags(parsed_text):
+        print('parsed_text')
+        print(parsed_text)
         output = {'word': [],
                   'pos_id': [],
                   'ent_id': []}
