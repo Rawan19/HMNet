@@ -337,7 +337,7 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
                 concat_sample['meeting'].append(turn)
             
             concat_sample['source']['sequence'].extend(sample['source']['sequence'])
-            concat_sample['target']['sequence'].extend(sample['target']['sequence'])
+          #  concat_sample['target']['sequence'].extend(sample['target']['sequence'])
 
             count += 1
 
