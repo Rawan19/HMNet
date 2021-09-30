@@ -211,8 +211,10 @@ class HMNetTrainer(DistributedTrainer):
             self.log("Evaluating model ... ")
         self.set_up_model()
 
-        for eval_dataset in ['dev', 'test']:
-            batch_generator_eval = self.get_batch_generator(eval_dataset)
+#         for eval_dataset in ['dev', 'test']:
+        for one_example in ['inference']:
+            batch_generator_eval = self.get_batch_generator(one_example)
+#             batch_generator_eval = self.get_batch_generator(eval_dataset)
 
             self.task.evaluator.reset_best_score(set_high=True)
             result, score, got_better_score = self.task.evaluator.eval_batches(
