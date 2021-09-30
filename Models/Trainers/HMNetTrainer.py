@@ -228,7 +228,7 @@ class HMNetTrainer(DistributedTrainer):
 #                 self.log("{0} results breakdown\n{1}".format(
 #                     one_example, result))
 
-    return predictions
+        return(predictions)
 
     def train(self):
         self.log(f"train on rank {self.opt['rank']}")
