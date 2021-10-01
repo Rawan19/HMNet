@@ -225,7 +225,7 @@ class HMNetTrainer(DistributedTrainer):
             print(predictions)
             
             file = open('summary.txt', 'w+')
-            file.write(predictions)
+            file.write(predictions[0][0])
             file.close()
             
         #    print('result:')
