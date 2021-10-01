@@ -204,8 +204,6 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
     ###############################
 
     def _parse_tags(parsed_text):
-        print('parsed_text')
-        print(parsed_text)
         output = {'word': [],
                   'pos_id': [],
                   'ent_id': []}
@@ -299,7 +297,6 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
                 assert False, f"Undefined Task {sample['task']}"
 
         doc = [sample for sample in doc if len(sample['source']['sequence']) > 0 and ('target' not in sample or sample['target']['sequence'] is None or len(sample['target']['sequence']) > 0)]
-#         doc = [sample for sample in doc if len(sample['source']['sequence']) > 0 and ('target' not in sample)]
         end = timer()
         # print('Tokenize takes {:06.2f} seconds'.format(end-start))
         return doc
@@ -336,8 +333,8 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
                 turn["role"] = role_dict.get(inv_role_dict[turn["role"]]+'-{}'.format(count), 0)
                 concat_sample['meeting'].append(turn)
             
-#             concat_sample['source']['sequence'].extend(sample['source']['sequence'])
-           concat_sample['target']['sequence'].extend(sample['target']['sequence'])
+            concat_sample['source']['sequence'].extend(sample['source']['sequence'])
+            concat_sample['target']['sequence'].extend(sample['target']['sequence'])
 
             count += 1
 
@@ -525,4 +522,3 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
     ###############################
 
     return batches
-
