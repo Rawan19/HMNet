@@ -189,7 +189,7 @@ class ROUGEEval():
               #  print(y_tokens)
                 #stop here
                 break
-                return predictions
+        return predictions
                 
 
 #                 if ("DEBUG" in self.opt and j >=10) or j >= self.eval_batches_num:
