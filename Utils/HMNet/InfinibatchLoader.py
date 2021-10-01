@@ -76,7 +76,12 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
     for i, data_set in enumerate(data_sets):
         task = data_set['task']
         dataset_name = data_set['name']
+        print('dataset_name')
+        print(dataset_name)
+        
         source = data_set['source']
+        print('source')
+        print(source)
         # to determine if use relative path to load dataset
         if "USE_REL_DATA_PATH" in task_args:
             source['dataset'] = os.path.join(task_args['datadir'], source['dataset'])
@@ -266,7 +271,8 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
                     turn["role"] = role_dict.get(sample['name'], 0)
                     sample['meeting'].append(turn)
                     source['sequence'].extend(turn["utt"]["word"])
-
+                print('print(source)')
+                print(print(source))
                 target = sample['target']
                 target['sequence'] = tokenizer.tokenize(target['sequence'])
                     
@@ -285,6 +291,8 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
                     sample['meeting'].append(turn)
                     assert isinstance(turn["utt"], dict), turn["utt"]
                     source['sequence'].extend(turn["utt"]["word"])
+                    print("source['sequence']")
+                    print(source['sequence'])
                 
                 sample['target'] = {}
                 summary_str = ' '.join(data['summary'])
@@ -299,6 +307,8 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
         #doc = [sample for sample in doc if len(sample['source']['sequence']) > 0 and ('target' not in sample or sample['target']['sequence'] is None or len(sample['target']['sequence']) > 0)]
         print('doc before')
         print(doc)
+        print("sample['source']['sequence']")
+        print(sample['source']['sequence'])
         doc = [sample for sample in doc if len(sample['source']['sequence']) > 0 ]
         
         print('doc after')
