@@ -221,6 +221,8 @@ class HMNetTrainer(DistributedTrainer):
 #                 self.module, batch_generator_eval, self.saveFolder, one_example)
             predictions = self.task.evaluator.eval_batches(
                 self.module, batch_generator_eval, self.saveFolder, one_example)
+            print('predictions')
+            print(predictions)
             
         #    print('result:')
          #   print(result)
