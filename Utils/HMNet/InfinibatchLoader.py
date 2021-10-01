@@ -289,11 +289,11 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
                     source['sequence'].extend(turn["utt"]["word"])
                 
                 sample['target'] = {}
-               # summary_str = ' '.join(data['summary'])
-               # if anon_roles:
-                #    for role in sample_role_dict:
-                 #       summary_str = summary_str.replace(role, "<speaker {}>".format(sample_role_dict[role]))
-                #sample['target']['sequence'] = tokenizer.tokenize(summary_str)
+               summary_str = ' '.join(data['summary'])
+               if anon_roles:
+                   for role in sample_role_dict:
+                       summary_str = summary_str.replace(role, "<speaker {}>".format(sample_role_dict[role]))
+                sample['target']['sequence'] = tokenizer.tokenize(summary_str)
                 
             else:
                 assert False, f"Undefined Task {sample['task']}"
