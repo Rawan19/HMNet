@@ -224,6 +224,10 @@ class HMNetTrainer(DistributedTrainer):
             print('predictions')
             print(predictions)
             
+            file = open('summary.txt', 'w+')
+            file.write(predictions)
+            file.close()
+            
         #    print('result:')
          #   print(result)
 #             if self.opt['rank'] == 0:
