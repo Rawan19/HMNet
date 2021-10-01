@@ -299,7 +299,7 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
         #doc = [sample for sample in doc if len(sample['source']['sequence']) > 0 and ('target' not in sample or sample['target']['sequence'] is None or len(sample['target']['sequence']) > 0)]
         print('doc before')
         print(doc)
-        doc = [sample for sample in doc if len(sample['source']['sequence']) > 0 and ('target' not in sample )]
+        doc = [sample for sample in doc if len(sample['source']['sequence']) > 0 ]
         
         print('doc after')
         print(doc)
