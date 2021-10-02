@@ -112,6 +112,9 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
                  'name': dataset_name,
                 } for s in source_chunk_files
             ])
+            
+        print('datasets_chunks')
+        print(datasets_chunks)
 
     # create an iterator to iterate the chunk file paths in each dataset
     if is_train:
@@ -124,7 +127,10 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
     else:
         datasets_chunks = [[chunk for dataset_chunks in datasets_chunks for chunk in dataset_chunks]] # flatten the datasets
         datasets_chunks[0].sort(key=lambda  x: x['source']['dataset'])  # make sure file order is always the same, independent of OS
-        datasets_chunks[0] = iterators.ChunkedSourceIterator(datasets_chunks[0], num_instances=world_size, instance_rank=rank) # in evaluation mode, the files are iterated once without shuffling, but still with parallelization
+        datasets_chunks[0] = iterators.ChunkedSourceIterator(datasets_chunks[0], num_instances=world_size, instance_rank=rank) 
+        # in evaluation mode, the files are iterated once without shuffling, but still with parallelization
+    print('datasets_chunks[0]' )
+    print(datasets_chunks[0] )
     ###############################
 
     dataset_batch_read_ahead = max(1, batch_read_ahead // len(datasets_chunks))
@@ -188,6 +194,8 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
 
         if len(doc) > 0:
             docs.append(doc)
+        print('doc')
+        print(doc)
         return docs # each doc in the docs list will be yielded by the SelectManyIterator
     datasets_doc_samples = []
     for dataset_chunks in datasets_chunks:
