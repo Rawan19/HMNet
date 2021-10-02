@@ -5,3 +5,4 @@
 !pip install jsonlines
 Python 3.7.12
 torch version: 1.9.0+cu102
+The nltk version is 3.2.5.
