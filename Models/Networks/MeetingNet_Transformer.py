@@ -173,7 +173,7 @@ class MeetingNet_Transformer(nn.Module):
                 (self.tokenizer.convert_ids_to_tokens(outputs[idx, i, :]), 0.0)
                 for i in range(num_return_sequences)]
             sents.append(candidates)
-        print('sents)
+        print('sents')
         print(sents)
         return sents
 
