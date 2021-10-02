@@ -61,5 +61,5 @@ with open('test_raw_newid.jsonl', 'w') as outfile:
         
 #gzip
 import gzip
-with open('ExampleRawData/meeting_summarization/AMI_proprec/test/test_raw2.jsonl', 'rb') as f_in, gzip.open('test_raw2.jsonl.gz', 'wb') as f_out:
+with open('ExampleRawData/meeting_summarization/AMI_proprec/test/test_raw2.jsonl', 'rb') as f_in, gzip.open('ExampleRawData/meeting_summarization/AMI_proprec/test/test_raw2.jsonl.gz', 'wb') as f_out:
     f_out.writelines(f_in)
