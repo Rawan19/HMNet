@@ -5,13 +5,13 @@ import nltk
 nltk.download('punkt')
 
 def preprocess_raw(raw_text : str) :
-  # nlp = spacy.load('en', parser = False)
+  nlp = spacy.load('en', parser = False)
   json_dict_outer =  {}
   json_dict =  {}
   json_dict_outer['id']="1"
-  nlp_spacy = spacy.load("en_core_web_sm")
-  POS = {w: i for i, w in enumerate([''] + list(nlp_spacy.tagger.labels))}
-  ENT = {w: i for i, w in enumerate([''] + nlp_spacy.entity.move_names)}
+#   nlp_spacy = spacy.load("en_core_web_sm")
+  POS = {w: i for i, w in enumerate([''] + list(nlp.tagger.labels))}
+  ENT = {w: i for i, w in enumerate([''] + nlp.entity.move_names)}
   name_role_dict = {'Ashwin Swarup' : 'PM' , 'Siddhant Bane' : 'ID' , 'Shashank M' :'UI' , 'Mitesh Gupta' :'ME'}
 
   list_dicts = [] 
