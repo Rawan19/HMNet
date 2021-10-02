@@ -13,8 +13,18 @@ journal = {Proceedings of the 2020 Conference on Empirical Methods in Natural La
 ```
 # What's new?
 ## Inference for a single example
-I modified the code to do inference for a single example.
+we modified the code to do inference for a single example.
 The predictions (summary) is stored in a summary.text file.
+
+we also added a preprcessing script to transfrom from Microsoft Teams meeting transcription file into the AMI jsonl format
+
+# Steps:
+0. cd HMNet
+1. If you have a transcript for a meeting, paste it in preprocess.py
+2. Edit the name_role_dict in preprocess.py file with the names included in the meeting(this should be automatically extracted in future versions)
+3. run preprocess.py. this returns the jsonl.gzip file that can be used as an input to the model, the file gets stored in ExampleRawData/meeting_summarization/AMI_proprec/test/test_raw2.jsonl.gzip
+4. Add the pretrained model to the repo in change that in the conf file
+5. run this line: !python PyLearn.py evaluate ExampleConf/conf_eval_hmnet_AMI
 
 # Finetune HMNet
 
