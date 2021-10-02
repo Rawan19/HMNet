@@ -48,6 +48,8 @@ class MeetingNet_Transformer(nn.Module):
 
         # here is a simple workaround to make sure all special tokens are not None
         self.tokenizer = self.tokenizer_class.from_pretrained(self.pretrained_tokenizer_path)
+        print('self.tokenizer')
+        print(self.tokenizer)
         special_tokens_tuple_list = [("eos_token", 128), ("unk_token", 129), ("pad_token", 130), ("bos_token", 131)]
 
         for special_token_name, special_token_id_offset in special_tokens_tuple_list:
@@ -57,6 +59,8 @@ class MeetingNet_Transformer(nn.Module):
                 self.config[special_token_name+'_id'] =  len(self.tokenizer)-special_token_id_offset
 
         self.vocab_size = self.tokenizer.vocab_size
+        print('self.vocab_size')
+        print(self.vocab_size)
         opt['vocab_size'] = self.vocab_size
         self.role_size = int(opt['ROLE_SIZE'])
         vocab_dim = int(opt['VOCAB_DIM'])
@@ -169,7 +173,8 @@ class MeetingNet_Transformer(nn.Module):
                 (self.tokenizer.convert_ids_to_tokens(outputs[idx, i, :]), 0.0)
                 for i in range(num_return_sequences)]
             sents.append(candidates)
-
+        print('sents)
+        print(sents)
         return sents
 
     def prepare_inputs_for_generation(self, input_ids, past, attention_mask, **kwargs):
