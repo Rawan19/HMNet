@@ -1,5 +1,5 @@
 # HMNet
-This is the official code for the Microsoft's paper of HMNet model at EMNLP 2020. It is implemented under PyTorch framework. The related [paper](https://www.microsoft.com/en-us/research/uploads/prod/2020/04/MeetingNet_EMNLP_full.pdf) to cite is:
+This is forked from the official code for the Microsoft's paper of HMNet model at EMNLP 2020. It is implemented under PyTorch framework. The related [paper](https://www.microsoft.com/en-us/research/uploads/prod/2020/04/MeetingNet_EMNLP_full.pdf) to cite is:
 
 ```
 @Article{zhu2020a,
@@ -11,6 +11,10 @@ url = {https://www.microsoft.com/en-us/research/publication/end-to-end-abstracti
 journal = {Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing},
 }
 ```
+# What's new?
+## Inference for a single example
+I modified the code to do inference for a single example.
+The predictions (summary) is stored in a summary.text file.
 
 # Finetune HMNet
 
