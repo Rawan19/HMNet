@@ -52,7 +52,8 @@ with open('test_raw_newid.json', 'w') as fout:
     
     
 #convert json to jsonl
-with open('test_raw_newid.jsonl', 'w') as outfile:
+
+with open('ExampleRawData/meeting_summarization/AMI_proprec/test/test_raw2.jsonl', 'w') as outfile:
     for entry in [json_file]:
       # print(entry)
      
