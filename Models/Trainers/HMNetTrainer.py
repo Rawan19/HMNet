@@ -214,6 +214,8 @@ class HMNetTrainer(DistributedTrainer):
         for one_example in [ 'test']:
        # for one_example in ['inference']:
             batch_generator_eval = self.get_batch_generator(one_example)
+            print('batch_generator_eval')
+            print(batch_generator_eval)
 #             batch_generator_eval = self.get_batch_generator(eval_dataset)
 
             self.task.evaluator.reset_best_score(set_high=True)
