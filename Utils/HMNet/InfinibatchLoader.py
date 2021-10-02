@@ -113,8 +113,8 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
                 } for s in source_chunk_files
             ])
             
-        print('datasets_chunks')
-        print(datasets_chunks)
+#         print('datasets_chunks')
+#         print(datasets_chunks)
 
     # create an iterator to iterate the chunk file paths in each dataset
     if is_train:
@@ -129,8 +129,8 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
         datasets_chunks[0].sort(key=lambda  x: x['source']['dataset'])  # make sure file order is always the same, independent of OS
         datasets_chunks[0] = iterators.ChunkedSourceIterator(datasets_chunks[0], num_instances=world_size, instance_rank=rank) 
         # in evaluation mode, the files are iterated once without shuffling, but still with parallelization
-    print('datasets_chunks[0]' )
-    print(datasets_chunks[0] )
+#     print('datasets_chunks[0]' )
+#     print(datasets_chunks[0] )
     ###############################
 
     dataset_batch_read_ahead = max(1, batch_read_ahead // len(datasets_chunks))
@@ -194,8 +194,8 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
 
         if len(doc) > 0:
             docs.append(doc)
-        print('doc')
-        print(doc)
+#         print('doc')
+#         print(doc)
         return docs # each doc in the docs list will be yielded by the SelectManyIterator
     datasets_doc_samples = []
     for dataset_chunks in datasets_chunks:
@@ -264,8 +264,8 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
         # use the provided Random object for all random operations in the transform, because that random object is checkpointed.
         start = timer()
         for sample in doc:
-            print('sample in doc')
-            print(sample)
+#             print('sample in doc')
+#             print(sample)
             if anon_roles:
                 sample_role_dict = {}
 
@@ -313,14 +313,14 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
                 assert False, f"Undefined Task {sample['task']}"
 
         #doc = [sample for sample in doc if len(sample['source']['sequence']) > 0 and ('target' not in sample or sample['target']['sequence'] is None or len(sample['target']['sequence']) > 0)]
-        print('doc before')
-        print(doc)
-        print("sample['source']['sequence']")
-        print(sample['source']['sequence'])
+#         print('doc before')
+#         print(doc)
+#         print("sample['source']['sequence']")
+#         print(sample['source']['sequence'])
         doc = [sample for sample in doc if len(sample['source']['sequence']) > 0 ]
         
-        print('doc after')
-        print(doc)
+#         print('doc after')
+#         print(doc)
         end = timer()
         # print('Tokenize takes {:06.2f} seconds'.format(end-start))
         return doc
