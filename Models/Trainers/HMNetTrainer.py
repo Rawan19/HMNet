@@ -67,8 +67,8 @@ class HMNetTrainer(DistributedTrainer):
                                               rank=self.opt['rank'],
                                               seed=self.seed)
         
-        print('batch_generator')
-        print(batch_generator)
+#         print('batch_generator')
+#         print(batch_generator)
         if isinstance(batch_generator, BaseBatchGen):
             # If it is a wrapper class of an infinibatch iterator,
             # get the internal infnitibatch iterator.
@@ -79,13 +79,13 @@ class HMNetTrainer(DistributedTrainer):
     def set_up_model(self):
         # instantiate module (tokenizer should be contained in module as self.module.tokenizer)
         try:
-            print("self.opt['MODEL']")
-            print(self.opt['MODEL'])
+#             print("self.opt['MODEL']")
+#             print(self.opt['MODEL'])
             model_module = importlib.import_module(
                 'Models.Networks.' + self.opt['MODEL'])
             model_class = getattr(model_module, self.opt['MODEL'])
-            print('self.opt:')
-            print(self.opt)
+#             print('self.opt:')
+#             print(self.opt)
             self.module = model_class(self.opt)
         except Exception as e:
             self.log(e)
@@ -214,8 +214,8 @@ class HMNetTrainer(DistributedTrainer):
         for one_example in [ 'test']:
        # for one_example in ['inference']:
             batch_generator_eval = self.get_batch_generator(one_example)
-            print('batch_generator_eval')
-            print(batch_generator_eval)
+#             print('batch_generator_eval')
+#             print(batch_generator_eval)
 #             batch_generator_eval = self.get_batch_generator(eval_dataset)
 
             self.task.evaluator.reset_best_score(set_high=True)
@@ -223,8 +223,8 @@ class HMNetTrainer(DistributedTrainer):
 #                 self.module, batch_generator_eval, self.saveFolder, one_example)
             predictions = self.task.evaluator.eval_batches(
                 self.module, batch_generator_eval, self.saveFolder, one_example)
-            print('predictions')
-            print(predictions)
+#             print('predictions')
+#             print(predictions)
             
             file = open('summary.txt', 'w+')
             file.write(predictions[0][0])
