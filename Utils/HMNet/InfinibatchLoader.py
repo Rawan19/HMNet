@@ -256,7 +256,7 @@ def HMNetBatchGen(task_args, dataset_label, model_config=None, tokenizer=None, w
         # use the provided Random object for all random operations in the transform, because that random object is checkpointed.
         start = timer()
         for sample in doc:
-            print('sample in doc)
+            print('sample in doc')
             print(sample)
             if anon_roles:
                 sample_role_dict = {}
