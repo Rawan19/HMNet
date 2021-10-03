@@ -45,7 +45,7 @@ def preprocess_raw(raw_text : str) :
     json_dict_outer['meeting'] = list_dicts
     json_dict_outer['summary']=[""]
     with open('test_raw_newid.json', 'w') as fout:
-    json.dump(preprocess_raw(text),fout)
+        json.dump(preprocess_raw(text),fout)
     
     
 #convert json to jsonl
