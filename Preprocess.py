@@ -4,6 +4,7 @@ from nltk.tokenize import word_tokenize
 import nltk
 nltk.download('punkt')
 
+print("Preprocessing the input file ...")
 def preprocess_raw(raw_text : str) :
   nlp = spacy.load('en', parser = False)
   json_dict_outer =  {}
@@ -80,5 +81,7 @@ with open('ExampleRawData/meeting_summarization/AMI_proprec/test/test_raw2.jsonl
         
 #gzip
 import gzip
-with open('ExampleRawData/meeting_summarization/AMI_proprec/test/test_raw2.jsonl', 'rb') as f_in, gzip.open('ExampleRawData/meeting_summarization/AMI_proprec/test/test_raw2.jsonl.gz', 'wb') as f_out:
+with open('ExampleRawData/meeting_summarization/AMI_proprec/test_raw2.jsonl', 'rb') as f_in, gzip.open('ExampleRawData/meeting_summarization/AMI_proprec/test/test_raw2.jsonl.gz', 'wb') as f_out:
     f_out.writelines(f_in)
+    
+print("Prerpocessing is Complete!")
