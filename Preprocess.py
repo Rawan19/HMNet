@@ -7,7 +7,7 @@ nltk.download('punkt')
 # print(sys.argv[0])
 # text = sys.argv[0]
 print("Preprocessing the input file ...")
-def preprocess_raw(raw_text : str) :
+def preprocess_raw(text) :
   nlp = spacy.load('en', parser = False)
   json_dict_outer =  {}
   json_dict =  {}
