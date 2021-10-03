@@ -34,7 +34,7 @@ def preprocess_raw(text) :
     output = {'word': [], 'pos_id': [],'ent_id': []}
     output['word'] = tokenized_text
 
-    for token in nlp_spacy(word_text):
+    for token in nlp(word_text):
       pos = token.tag_
       output['pos_id'].append(POS[pos] if pos in POS else 0)
       ent = 'O' if token.ent_iob_ == 'O' else (token.ent_iob_ + '-' + token.ent_type_)
