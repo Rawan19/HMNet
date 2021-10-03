@@ -172,8 +172,8 @@ class ROUGEEval():
                     if torch.is_tensor(dev_batch[b]):
                         dev_batch[b] = dev_batch[b].to(self.opt['device'])
                 
-                print('dev_batch')
-                print(dev_batch)
+#                 print('dev_batch')
+#                 print(dev_batch)
                 beam_search_res = module(dev_batch, beam_search=True, max_sent_len=max_sent_len)
                 print('beam_search_res')
                 print(beam_search_res)
