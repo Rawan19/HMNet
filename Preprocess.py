@@ -3,9 +3,9 @@ import spacy
 from nltk.tokenize import word_tokenize
 import nltk
 nltk.download('punkt')
-print("argss:")
-print(sys.argv[0])
-text = sys.argv[0]
+# print("argss:")
+# print(sys.argv[0])
+# text = sys.argv[0]
 print("Preprocessing the input file ...")
 def preprocess_raw(raw_text : str) :
   nlp = spacy.load('en', parser = False)
@@ -44,7 +44,27 @@ def preprocess_raw(raw_text : str) :
     list_dicts.append(json_dict)
     json_dict_outer['meeting'] = list_dicts
     json_dict_outer['summary']=[""]
-  return json_dict_outer
+    with open('test_raw_newid.json', 'w') as fout:
+    json.dump(preprocess_raw(text),fout)
+    
+    
+#convert json to jsonl
+
+    with open('ExampleRawData/meeting_summarization/AMI_proprec/test/test_raw2.jsonl', 'w') as outfile:
+        for entry in [json_file]:
+          # print(entry)
+
+            json.dump(entry, outfile)
+            outfile.write('\n')
+
+    #gzip
+    import gzip
+    with open('ExampleRawData/meeting_summarization/AMI_proprec/test_raw2.jsonl', 'rb') as f_in, gzip.open('ExampleRawData/meeting_summarization/AMI_proprec/test/test_raw2.jsonl.gz', 'wb') as f_out:
+        f_out.writelines(f_in)
+
+    print("Prerpocessing is Complete!")
+
+#   return json_dict_outer
 
 
 # text = """
@@ -67,23 +87,4 @@ def preprocess_raw(raw_text : str) :
 # """
 
 
-json_file= preprocess_raw(text)
-with open('test_raw_newid.json', 'w') as fout:
-    json.dump(preprocess_raw(text),fout)
-    
-    
-#convert json to jsonl
-
-with open('ExampleRawData/meeting_summarization/AMI_proprec/test/test_raw2.jsonl', 'w') as outfile:
-    for entry in [json_file]:
-      # print(entry)
-     
-        json.dump(entry, outfile)
-        outfile.write('\n')
-        
-#gzip
-import gzip
-with open('ExampleRawData/meeting_summarization/AMI_proprec/test_raw2.jsonl', 'rb') as f_in, gzip.open('ExampleRawData/meeting_summarization/AMI_proprec/test/test_raw2.jsonl.gz', 'wb') as f_out:
-    f_out.writelines(f_in)
-    
-print("Prerpocessing is Complete!")
+# json_file= preprocess_raw(text)
