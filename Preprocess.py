@@ -7,25 +7,24 @@ nltk.download('punkt')
 # print(sys.argv[0])
 # text = sys.argv[0]
 print("Preprocessing the input file ...")
-def preprocess_raw(text) :
-  nlp = spacy.load('en', parser = False)
+def preprocess_raw(raw_text : str) :
   json_dict_outer =  {}
   json_dict =  {}
   json_dict_outer['id']="1"
-#   nlp_spacy = spacy.load("en_core_web_sm")
+  nlp = spacy.load('en', parser = False)
+  # nlp_spacy = spacy.load("en_core_web_sm")
   POS = {w: i for i, w in enumerate([''] + list(nlp.tagger.labels))}
   ENT = {w: i for i, w in enumerate([''] + nlp.entity.move_names)}
-  name_role_dict = {'Ashwin Swarup' : 'PM' , 'Siddhant Bane' : 'ID' , 'Shashank M' :'UI' , 'Mitesh Gupta' :'ME'}
+  name_role_dict = {'A' : 'PM' , 'B' : 'ID' , 'C' :'UI' , 'D' :'ME'}
 
   list_dicts = [] 
   turns = text.split('\n')
   for turn in turns : 
-    
     json_dict =  {}
     if len(turn) < 1 : continue 
     name = turn.split(":", 1)[0]
     role_name = name_role_dict[name] 
-    json_dict['speaker'] = name
+    json_dict['Speaker'] = name
     json_dict['role'] = role_name
 
     word_text = turn.split(":", 1)[1]
@@ -42,29 +41,24 @@ def preprocess_raw(text) :
 
     json_dict['utt'] = output
     list_dicts.append(json_dict)
-    json_dict_outer['meeting'] = list_dicts
-    json_dict_outer['summary']=[""]
-    with open('test_raw_newid.json', 'w') as fout:
-        json.dump(preprocess_raw(text),fout)
-    
-    
-#convert json to jsonl
-
-    with open('ExampleRawData/meeting_summarization/AMI_proprec/test/test_raw2.jsonl', 'w') as outfile:
-        for entry in [json_file]:
+  
+  json_dict_outer['meeting'] = list_dicts
+  json_dict_outer['summary']=[""]
+  with open('test_raw2.jsonl', 'w') as outfile:
+        for entry in [json_dict_outer]:
           # print(entry)
 
             json.dump(entry, outfile)
             outfile.write('\n')
 
-    #gzip
-    import gzip
-    with open('ExampleRawData/meeting_summarization/AMI_proprec/test_raw2.jsonl', 'rb') as f_in, gzip.open('ExampleRawData/meeting_summarization/AMI_proprec/test/test_raw2.jsonl.gz', 'wb') as f_out:
+  import gzip
+  with open('test_raw2.jsonl', 'rb') as f_in, gzip.open('ExampleRawData/meeting_summarization/AMI_proprec/test/test_raw2.jsonl.gz', 'wb') as f_out:
         f_out.writelines(f_in)
 
-    print("Prerpocessing is Complete!")
+  print("Prerpocessing is Complete! the new test file was created with the following path: ExampleRawData/meeting_summarization/AMI_proprec/test/test_raw2.jsonl.gz")
 
-#   return json_dict_outer
+
+
 
 
 # text = """
@@ -87,4 +81,4 @@ def preprocess_raw(text) :
 # """
 
 
-# json_file= preprocess_raw(text)
+preprocess_raw(text)
