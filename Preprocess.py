@@ -24,7 +24,7 @@ def preprocess_raw(raw_text : str) :
     if len(turn) < 1 : continue 
     name = turn.split(":", 1)[0]
     role_name = name_role_dict[name] 
-    json_dict['Speaker'] = name
+    json_dict['speaker'] = name
     json_dict['role'] = role_name
 
     word_text = turn.split(":", 1)[1]
